@@ -1,3 +1,12 @@
+use master
+go
+
+create database TiendaOnline1;
+go	
+
+
+
+
 CREATE SCHEMA ClienteTelefono;
 GO
 
