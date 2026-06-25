@@ -41,7 +41,10 @@ CREATE TABLE ClienteTelefono.Telefonos (
     IDCliente int not null,
     Tipo varchar(20) not null constraint CK_Telefonos_Tipo check (Tipo IN ('Celular', 'Casa', 'Trabajo', 'Otro')),
     Numero varchar(9) not null constraint CK_Telefonos_Numero check (Numero LIKE '[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]'),
-    CONSTRAINT FK_Telefonos_Clientes FOREIGN KEY (IDCliente) REFERENCES Clientes(IDCliente)
+    CONSTRAINT FK_Telefonos_Clientes FOREIGN KEY (IDCliente) REFERENCES Clientes(IDCliente),
+	created_at datetime default getdate(),
+	updated_at datetime,
+	deleted_at datetime
 );
 GO
 
@@ -63,7 +66,10 @@ CREATE TABLE Inventario.CATEGORIA (
     IDCategoria INT IDENTITY(1,1), 
     Nombre      VARCHAR(100) NOT NULL, 
     CONSTRAINT pk_categoria PRIMARY KEY (IDCategoria),
-    CONSTRAINT ck_nombre_categoria_no_vacio CHECK (LEN(TRIM(Nombre)) > 0)
+    CONSTRAINT ck_nombre_categoria_no_vacio CHECK (LEN(TRIM(Nombre)) > 0),
+	created_at datetime default getdate(),
+	updated_at datetime,
+	deleted_at datetime
 );
 GO
 
@@ -77,7 +83,10 @@ CREATE TABLE Productos (
 	Nombre varchar(100) not null,
 	Stock int not null constraint CK_Productos_Stock check (Stock >= 0),
 	IDCategoria int not null,
-	CONSTRAINT FK_Productos_Categorias foreign key (IDCategoria) references Inventario.CATEGORIA(IDCategoria)
+	CONSTRAINT FK_Productos_Categorias foreign key (IDCategoria) references Inventario.CATEGORIA(IDCategoria),
+	created_at datetime default getdate(),
+	updated_at datetime,
+	deleted_at datetime
 );
 GO
 
@@ -196,6 +205,10 @@ UPDATE Usuarios.USUARIO
 SET Telefono = '888889999',
     updated_at = GETDATE()
 WHERE Email = 'kellys.admin@tienda.com';
+GO
+
+DELETE FROM ClienteTelefono.Telefonos
+WHERE IDTelefono = 4;
 GO
 
 SELECT * FROM Clientes;
